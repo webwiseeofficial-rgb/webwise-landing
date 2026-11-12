@@ -127,6 +127,23 @@ footer{padding:28px 0;color:var(--muted);font-size:15px;text-align:center;backgr
 @media (max-width:440px){.send{grid-template-columns:1fr}.steps{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1339090918162479');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1339090918162479&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -279,6 +296,12 @@ var WA_NUMBER = "213XXXXXXXXX";
 var FB_PAGE_ID = "61557537533407";
 
 var f = document.getElementById("f"), err = document.getElementById("err");
+
+// Meta Pixel: clic sur WhatsApp / Messenger = événement Purchase
+function trackPurchase(){
+  try { if(window.fbq) fbq('track','Purchase',{value:1,currency:'DZD'}); } catch(x) {}
+}
+document.getElementById("fab").addEventListener("click", trackPurchase);
 document.getElementById("fab").href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent("السلام عليكم، أريد معرفة المزيد عن خدمات Webwise");
 
 function build(){
@@ -299,6 +322,7 @@ f.addEventListener("click", function(e){
   if(!b) return;
   var text = build();
   if(!text) return;
+  trackPurchase();
   if(b.dataset.to === "wa"){
     window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank", "noopener");
   } else {
