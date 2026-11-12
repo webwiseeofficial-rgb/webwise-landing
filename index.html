@@ -263,7 +263,7 @@ src="https://www.facebook.com/tr?id=1339090918162479&ev=PageView&noscript=1"
   <div class="wrap grid">
     <div>
       <h2>أخبرنا عن مشروعك</h2>
-      <p>املأ النموذج واختر طريقة التواصل التي تناسبك، وسنرد عليك في أقرب وقت لنعطيك عرض السعر.</p>
+      <p>املأ النموذج وسنكمل الحديث معك عبر واتساب في أقرب وقت لنعطيك عرض السعر.</p>
     </div>
     <form class="card" id="f" novalidate>
       <div class="field"><label for="name">الاسم</label><input id="name" autocomplete="name" placeholder="اسمك الكامل"></div>
@@ -272,11 +272,7 @@ src="https://www.facebook.com/tr?id=1339090918162479&ev=PageView&noscript=1"
         <select id="type"><option>موقع تعريفي</option><option>متجر إلكتروني</option><option>لا أعرف بعد، أحتاج استشارة</option></select></div>
       <div class="field"><label for="msg">رسالتك (اختياري)</label><textarea id="msg" rows="3" placeholder="مثال: عندي مطعم وأريد موقعًا لعرض القائمة"></textarea></div>
       <div class="err" id="err" role="alert"></div>
-      <div class="send">
-        <button class="btn btn-wa" type="button" data-to="wa">أرسل عبر واتساب</button>
-        <button class="btn btn-fb" type="button" data-to="fb">أرسل عبر ماسنجر</button>
-      </div>
-      <p class="hint">عند اختيار ماسنجر يُنسخ نص رسالتك تلقائيًا، ما عليك سوى لصقه في المحادثة.</p>
+      <button class="btn btn-wa" type="button" data-to="wa" style="width:100%">أرسل عبر واتساب</button>
     </form>
   </div>
 </section>
@@ -293,15 +289,13 @@ src="https://www.facebook.com/tr?id=1339090918162479&ev=PageView&noscript=1"
 <script>
 // ⚙️ عدّل هذا الرقم: رقم واتساب بالصيغة الدولية بدون + ولا أصفار (مثال الجزائر: 213555000000)
 var WA_NUMBER = "213XXXXXXXXX";
-var FB_PAGE_ID = "61557537533407";
 
 var f = document.getElementById("f"), err = document.getElementById("err");
 
-// Meta Pixel: clic sur WhatsApp / Messenger = événement Purchase
+// Meta Pixel: envoi du formulaire (vers WhatsApp) = événement Purchase
 function trackPurchase(){
   try { if(window.fbq) fbq('track','Purchase',{value:1,currency:'DZD'}); } catch(x) {}
 }
-document.getElementById("fab").addEventListener("click", trackPurchase);
 document.getElementById("fab").href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent("السلام عليكم، أريد معرفة المزيد عن خدمات Webwise");
 
 function build(){
@@ -323,14 +317,7 @@ f.addEventListener("click", function(e){
   var text = build();
   if(!text) return;
   trackPurchase();
-  if(b.dataset.to === "wa"){
-    window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank", "noopener");
-  } else {
-    try { navigator.clipboard.writeText(text); } catch(x) {}
-    err.style.color = "#1a7f4b";
-    err.textContent = "تم نسخ رسالتك، الصقها في محادثة ماسنجر.";
-    window.open("https://m.me/" + FB_PAGE_ID, "_blank", "noopener");
-  }
+  window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank", "noopener");
 });
 </script>
 </body>
